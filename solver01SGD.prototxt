@@ -1,0 +1,30 @@
+train_net: "modelTan.prototxt"
+
+test_net: "modelTan.prototxt"
+
+test_iter: 25
+
+test_interval: 100
+
+base_lr: 0.0001
+
+display: 100
+
+max_iter: 100000
+
+lr_policy: "fixed"
+
+gamma: 0.1
+
+power: 1.0
+
+momentum: 0.9
+
+snapshot_prefix: "TanH_00001SGD"
+
+clip_gradients: 1
+
+random_seed: 43379257
+
+type: "SGD"
+

@@ -1,0 +1,5 @@
+AliphaticCarbonXSHydrophobe AliphaticCarbonXSNonHydrophobe AromaticCarbonXSHydrophobe AromaticCarbonXSNonHydrophobe
+PolarHydrogen Hydrogen
+Oxygen OxygenXSAcceptor OxygenXSDonorAcceptor
+Nitrogen NitrogenXSAcceptor NitrogenXSDonor NitrogenXSDonorAcceptor
+Fluorine

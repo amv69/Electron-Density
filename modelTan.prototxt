@@ -1,0 +1,130 @@
+
+
+layer{
+        name: "data"
+        type: "MolGridData"
+        top: "data"
+        top: "label"
+        molgrid_data_param{
+                source: "TESTMOL_1000"
+                dimension: 19.8
+                batch_size: 20
+                balanced: false
+		shuffle: false
+                resolution: 0.2
+                fix_center_to_origin: true
+                ligmap: "ligmap"
+		recmap: "empty"
+        }
+}
+
+layer{
+        name: "ndim"
+        type: "NDimData"
+        top: "ndim"
+        top: "nDimLabel"
+        ndim_data_param{
+                source: "TRAINFILE_1000"
+                batch_size: 20
+                balanced: false
+		shuffle: false
+        shape{
+                dim: 100
+                dim: 100
+                dim: 100
+        }
+        }
+
+}
+
+layer {
+  bottom: "ndim"
+  top: "tanh"
+  name: "tanh"
+  type: "TanH"
+}
+
+layer {
+  name: "unit1_conv"
+  type: "Convolution"
+  bottom: "data"
+  top: "unit1_conv"
+  convolution_param {
+    num_output: 6
+    pad: 2
+    kernel_size: 5
+    stride: 1
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "unit1_func"
+      type: "ReLU"
+      bottom: "unit1_conv"
+      top: "unit1_conv"
+
+    }
+
+    layer {
+      name: "unit2_conv"
+      type: "Convolution"
+      bottom: "unit1_conv"
+      top: "unit2_conv"
+      convolution_param {
+        num_output: 12
+        pad: 2
+        kernel_size: 5
+        stride: 1
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "unit2_func"
+      type: "ReLU"
+      bottom: "unit2_conv"
+      top: "unit2_conv"
+
+    }
+
+    layer {
+      name: "unit3_conv"
+      type: "Convolution"
+      bottom: "unit2_conv"
+      top: "unit3_conv"
+      convolution_param {
+        num_output: 1
+	pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+          type: "xavier"
+        }
+      }
+    }
+    layer {
+      name: "unit3_func"
+      type: "TanH"
+      bottom: "unit3_conv"
+      top: "unit3_conv"
+
+    }
+
+
+    layer{
+            name: "loss"
+            type: "EuclideanLoss"
+            bottom: "unit3_conv"
+            bottom: "tanh"
+            top: "rmsd"
+
+    }
+layer{
+ name: "s1"
+ type: "Silence"
+ bottom: "label"
+ bottom: "nDimLabel"
+}
